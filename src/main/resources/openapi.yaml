@@ -1,0 +1,54 @@
+openapi: 3.0.1
+info:
+  title: Servicio de Procesamiento de Texto
+  version: 1.0.0
+
+paths:
+  /api/texto:
+    post:
+      summary: Procesa un texto y devuelve el resultado transformado
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: |
+                3\the force is strong in this one
+                7\take what you can, give nothing back
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: |
+                  the force is strong in this one\false
+                  take what you can give nothing back\true
+        '400':
+          description: Formato inválido
+  /health/live:
+    get:
+      summary: Liveness check
+      description: Verifica si la aplicación está viva y ejecutándose.
+      responses:
+        '200':
+          description: Aplicación viva
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ✅ Liveness check OK
+  /health/ready:
+    get:
+      summary: Readiness check
+      description: Verifica si la aplicación está lista para recibir tráfico (puede incluir validaciones internas).
+      responses:
+        '200':
+          description: Aplicación lista
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: ✅ Readiness check OK
